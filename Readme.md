@@ -37,7 +37,7 @@
  
 ###Step 3: Now we just need to accelerate the capture IV's process through the injected traffic from the attacker's computer. To do this you will use the authenticated and associated client in the next step. Let capture an ARP-request packet, and then reinjected into the network to dramatically increase the number of IVs packets.
  
-```aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlp2s0 ó aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlan0```
+```aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlp2s0 or aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlan0```
  
 ###where '-3' indicates attack type and '-x 600' allow us to indicates the speed of the reinjected packages.
  
