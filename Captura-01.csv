@@ -1,0 +1,7 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+80:9B:20:49:22:E0, 2016-11-05 00:49:09, 2016-11-05 00:49:11, -51,      199, 00:1A:2B:AF:57:DA,
+AC:D1:B8:0E:C5:29, 2016-11-05 00:49:11, 2016-11-05 00:49:11, -87,        3, (not associated) , vodafoneE71A
+

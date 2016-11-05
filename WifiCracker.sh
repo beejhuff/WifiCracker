@@ -10,7 +10,7 @@
 monitor="mon0"
 usuario=$(whoami)
 usuarioNormal="$USER"
-valor=1
+value=1
 
 monitorMode(){
 
@@ -26,9 +26,9 @@ monitorMode(){
     echo "Iniciando modo monitor..."
     sleep 2
 
-    if [ "$valor" = "1" ]; then
+    if [ "$value" = "1" ]; then
       airmon-ng start wlp2s0
-      valor=2
+      value=2
       echo " "
       echo "Dando de baja la interfaz mon0"
       echo " "
@@ -43,7 +43,9 @@ monitorMode(){
       echo " "
       sleep 2
       ifconfig mon0 up
-      valor=2
+      value=2
+      echo "¡Terminado!"
+      sleep 3
     else
       echo " "
       echo "No es posible, ya estás en modo monitor"
@@ -76,14 +78,55 @@ monitorDown(){
   echo "Dando de baja el modo monitor..."
   echo " "
   sleep 2
-  if [ "$valor" = "2" ]; then
+  if [ "$value" = "2" ]; then
     airmon-ng stop mon0
     echo " "
+    echo "Interfaz mon0 dada de baja con éxito"
+    echo " "
     sleep 4
-    valor=1
+    value=1
   else
     echo "No hay interfaz mon0, tienes que iniciarla con la opción 1"
     sleep 3
+  fi
+
+}
+
+wifiScanner(){
+
+  if [ "$value" = "2" ]; then
+    echo " "
+    echo "Van a escanearse las redes Wifis cercanas..."
+    echo " "
+    sleep 4
+    airodump-ng mon0
+    echo " "
+    echo -n "Red Wifi que quiere marcar como objetivo: "
+    read wifiName
+    echo " "
+    echo -n "Marque el canal en el que se encuentra: "
+    read channelWifi
+    echo " "
+    echo -n "Nombre que desea ponerle a la carpeta: "
+    read folderName
+    echo " "
+    echo -n "Nombre que desea ponerle al archivo: "
+    read archiveName
+    echo " "
+    echo -n "Escribe tu nombre de usuario del sistema: "
+    read userSystem
+    echo " "
+    mkdir /home/$userSystem/Escritorio/$folderName
+    cd /home/$userSystem/Escritorio/$folderName
+    echo "A continuación vamos a ver la actividad sólo en $wifiName"
+    echo " "
+    sleep 3
+    airodump-ng -c $channelWifi -w $archiveName --essid $wifiName mon0
+  else
+    echo " "
+    echo "Inicia el modo monitor primero"
+    echo " "
+    sleep 2
   fi
 
 }
@@ -114,6 +157,9 @@ while true
     fi
     if [ "$opcionMenu" = "3" ]; then
       monitorDown
+    fi
+    if [ "$opcionMenu" = "4" ]; then
+      wifiScanner
     fi
     if [ "$opcionMenu" = "0" ]; then
       echo " "
