@@ -6,7 +6,12 @@
 
 ###Also you can use the program with WEP Wifi's protocol, for this option you don't need any dictionary
 
-###Remember you need to install 'aircrack-ng':
+###Remember you need to install 'aircrack-ng' and 'macchanger':
+
+| Program  | command |
+| ------------- | ------------- |
+| aircrack-ng  | sudo apt-get install aircrack-ng  |
+| macchanger  | sudo apt-get install macchanger  |
 
 ## ```<sudo apt-get install aircrack-ng>```
 
