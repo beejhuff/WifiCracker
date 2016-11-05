@@ -27,3 +27,16 @@
 
 ![Working Good](funciona.png)
 
+###***************************************************************
+
+###For option 6, you make a fake auth client. Sometimes, there are no clients connected to the network, so you have to create one tricking the routter. You can use your own mac to make fake authentications.
+
+###Here you can see there are some clients connected, but particulary... i want to authenticate the client whose MAC adress is C8:38:70:59:31:4B:
+
+![Unassociated](Unassociated.png)
+
+###So doing option 6 look what happens with C8:38:70:59:31:4B, now it's connected to the network:
+
+![Unassociated](Associated.png)
+
+
