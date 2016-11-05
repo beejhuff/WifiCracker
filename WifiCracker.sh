@@ -10,6 +10,7 @@
 monitor="mon0"
 usuario=$(whoami)
 usuarioNormal="$USER"
+valor=1
 
 monitorMode(){
 
@@ -24,13 +25,10 @@ monitorMode(){
     echo " "
     echo "Iniciando modo monitor..."
     sleep 2
-    if [ "ifconfig | grep $monitor" = "$monitor" ]; then
-      echo " "
-      echo "Ya iniciaste antes el modo monitor, no se te va a permitir iniciar otro"
-      echo " "
-      sleep 3
-    else
+
+    if [ "$valor" = "1" ]; then
       airmon-ng start wlp2s0
+      valor=2
       echo " "
       echo "Dando de baja la interfaz mon0"
       echo " "
@@ -45,6 +43,12 @@ monitorMode(){
       echo " "
       sleep 2
       ifconfig mon0 up
+      valor=2
+    else
+      echo " "
+      echo "No es posible, ya estás en modo monitor"
+      echo " "
+      sleep 4
     fi
   elif [ "$usuario" = "$USER" ]; then
     echo " "
@@ -52,7 +56,6 @@ monitorMode(){
     echo " "
     sleep 3
   fi
-
 }
 
 interfacesMode(){
@@ -73,10 +76,11 @@ monitorDown(){
   echo "Dando de baja el modo monitor..."
   echo " "
   sleep 2
-  if [ "ifconfig | grep $monitor" = "mon0" ]; then
+  if [ "$valor" = "2" ]; then
     airmon-ng stop mon0
     echo " "
     sleep 4
+    valor=1
   else
     echo "No hay interfaz mon0, tienes que iniciarla con la opción 1"
     sleep 3
