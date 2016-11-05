@@ -8,11 +8,11 @@
 
 ###Remember you need to install 'aircrack-ng':
 
-## ```ruby <sudo apt-get install aircrack-ng>```
+## ```<sudo apt-get install aircrack-ng>```
 
 ##And macchanger:
 
-## ```ruby <sudo apt-get install macchanger>```
+## ```<sudo apt-get install macchanger>```
 
 ###Mediafire links for dictionaries: [Dictionaries](https://mega.nz/#F!PB0ljZwC!H1CdY80f0mrTS4AdUm3BZw)
 
