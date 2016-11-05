@@ -1,4 +1,4 @@
-#Wifi Cracker
+#**Wifi Cracker**
 
 ##Program made in bash that allows you to obtain Wifi's passwords.
 
@@ -6,11 +6,15 @@
 
 ###Also you can use the program with WEP Wifi's protocol, for this option you don't need any dictionary
 
-###Remember you need to install 'aircrack-ng' and 'macchanger':
+###Remember you need to install 'aircrack-ng':
 
-## sudo apt-get install aircrack-ng || sudo apt-get install macchanger
+## `<sudo apt-get install aircrack-ng>`
 
-###Mediafire links for dictionaries: https://mega.nz/#F!PB0ljZwC!H1CdY80f0mrTS4AdUm3BZw
+##And macchanger:
+
+## `<sudo apt-get install macchanger>`
+
+###Mediafire links for dictionaries: [Dictionaries!](https://mega.nz/#F!PB0ljZwC!H1CdY80f0mrTS4AdUm3BZw)
 
 ###---------------------------------------------------------------------------------------------------------------------------
 
