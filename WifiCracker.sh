@@ -126,7 +126,7 @@ wifiScanner(){
     echo " "
     echo "Abra otra terminal, y dejando en ejecución este proceso ejecute la opción 5"
     echo " "
-    sleep 5
+    sleep 7
 
     # El siguiente comando también podemos usarlo con la sintaxis: airodump-ng -c ' ' -w ' ' --bssid '$wifiMAC' mon0
     # La 'essid' corresponde al nombre del Wifi, la 'bssid' a su dirección MAC
@@ -144,8 +144,12 @@ wifiScanner(){
 
 wifiPassword(){
 
+  # Es posible que tengas que volver a hacer este proceso varias veces, ya que hay que esperar a que se genere el Handshake.
+  # El Handshake se genera en el momento en el que el cliente se vuelve a reconectar a la red (esto no siempre es así, primero
+  # por fines prácticos nos será de utilidad verlo de esta forma)
+
   echo " "
-  echo "Esta opción sólo deberías ejecutarla si ya has hecho los pasos 1 y 4, de lo contrario no obtendrás nada"
+  echo "Esta opción sólo deberías ejecutarla si ya has hecho los pasos 1, 4 y 5... de lo contrario no obtendrás nada"
   echo " "
   sleep 3
   echo " "
@@ -193,12 +197,11 @@ macAttack(){
   echo " "
   echo "Procedemos a enviar paquetes de deautenticación a la dirección MAC especificada"
   echo " "
-  echo "Es recomendable esperar 1 minuto para que se genere el Handshake"
+  echo "Es recomendable esperar 1 minuto"
   echo " "
-  echo "Cuando el minuto haya pasado, escoga la opción 8 del menú principal de la misma terminal en la que se encuentra"
+  echo "Cuando el minuto haya pasado, presione Ctrl+C para parar el proceso y desde una nueva terminal escoga la opción 7"
   echo " "
-  echo "Una vez hecho esto, por último sólo tendrá que escoger la opción 7"
-  sleep 10
+  sleep 13
   aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
   # También podríamos haber hecho una deautenticación global y esperar a que se genere un Handshake por parte de
