@@ -8,39 +8,53 @@
 # ¡¡Debes de ejecutar el programa siendo superusuario!!
 
 monitor="mon0"
+usuario=$(whoami)
+usuarioNormal="$USER"
 
 monitorMode(){
 
-  echo " "
-  echo "Abriendo configuración de interfaz..."
-  echo " "
-  sleep 2
-  ifconfig
-  echo " "
-  echo "Iniciando modo monitor..."
-  sleep 2
-  if [ "ifconfig | grep $monitor" = "$monitor" ]; then
+  #Tienes que ser root para ejecutar esta opción, de lo contrario no podrás
+
+  if [ "$usuario" = "root" ]; then
     echo " "
-    echo "Ya iniciaste antes el modo monitor, no se te va a permitir iniciar otro"
+    echo "Abriendo configuración de interfaz..."
+    echo " "
+    sleep 2
+    ifconfig
+    echo " "
+    echo "Iniciando modo monitor..."
+    sleep 2
+    if [ "ifconfig | grep $monitor" = "$monitor" ]; then
+      echo " "
+      echo "Ya iniciaste antes el modo monitor, no se te va a permitir iniciar otro"
+      echo " "
+      sleep 3
+    else
+      airmon-ng start wlp2s0
+      echo " "
+      echo "Dando de baja la interfaz mon0"
+      echo " "
+      sleep 2
+      ifconfig mon0 down
+      echo "Cambiando direccion MAC..."
+      echo " "
+      sleep 2
+      macchanger -a mon0
+      echo " "
+      echo "Dando de alta la interfaz mon0"
+      echo " "
+      sleep 2
+      ifconfig mon0 up
+    fi
+  fi
+
+  if [ "$usuario" = "$USER" ]; then
+    echo " "
+    echo "Para ejecutar esta opción primero debes ser superusuario"
     echo " "
     sleep 3
-  else
-    airmon-ng start wlp2s0
-    echo " "
-    echo "Dando de baja la interfaz mon0"
-    echo " "
-    sleep 2
-    ifconfig mon0 down
-    echo "Cambiando direccion MAC..."
-    echo " "
-    sleep 2
-    macchanger -a mon0
-    echo " "
-    echo "Dando de alta la interfaz mon0"
-    echo " "
-    sleep 2
-    ifconfig mon0 up
   fi
+
 }
 
 interfacesMode(){
@@ -71,6 +85,7 @@ monitorDown(){
   fi
 
 }
+
 while true
   do
 
