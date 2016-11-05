@@ -150,6 +150,10 @@ wifiScanner(){
 wifiPassword(){
 
   echo " "
+  echo "Esta opción sólo deberías ejecutarla si ya has hecho los pasos 1 y 4, de lo contrario no obtendrás nada"
+  echo " "
+  sleep 3
+  echo " "
   echo -n "Nombre del diccionario (póngalo en el escritorio, con extensión correspondiente): "
   read dictionaryName
   echo " "
