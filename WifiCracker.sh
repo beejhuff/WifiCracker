@@ -98,6 +98,7 @@ wifiScanner(){
     echo " "
     echo "Van a escanearse las redes Wifis cercanas..."
     echo " "
+    echo "Una vez carguen más o menos todas las redes, presiona Ctrl+C"
     sleep 4
     airodump-ng mon0
     echo " "
