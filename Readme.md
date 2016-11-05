@@ -25,7 +25,7 @@
  
 ###Step 2: Execute airodump-ng to save the IV packages (packages where the password travels)
  
-```airodump-ng -w datos wlp2s0 ó airodump-ng -w datos wlan0```
+```airodump-ng -w datos wlp2s0 or airodump-ng -w datos wlan0```
  
 ###where '-w datos' indicates the file name where data will be saved
  
@@ -33,7 +33,7 @@
 
 ###For example:
  
-```airodump-ng --ivs -w datos -c 11 wlp2s0 ó airodump-ng --ivs -w datos -c 11 wlan0```
+```airodump-ng --ivs -w datos -c 11 wlp2s0 or airodump-ng --ivs -w datos -c 11 wlan0```
  
 ###Step 3: Now we just need to accelerate the capture IV's process through the injected traffic from the attacker's computer. To do this you will use the authenticated and associated client in the next step. Let capture an ARP-request packet, and then reinjected into the network to dramatically increase the number of IVs packets.
  
