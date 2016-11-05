@@ -6,6 +6,10 @@
 
 ###Also you can use the program with WEP Wifi's protocol, for this option you don't need any dictionary
 
+###Remember you need to install 'aircrack-ng' and 'macchanger':
+
+## sudo apt-get install aircrack-ng || sudo apt-get install macchanger
+
 ###---------------------------------------------------------------------------------------------------------------------------
 
 ### All the process has to be done from 3 terminals. First you have to choose option 1, and then monitor interface is enabled. After that, you choose option 4 and after targetting a Wifi, you have to open a new terminal. Then execute the program again and (with Terminal 1 running) choose option 5 in Terminal 2. You have to wait 1 minute in option 5, and then press Ctrl+C. After that, open a new terminal and choose option 7 from Terminal 3 for finishing. If option 7 doesn't work, try again... that's because you need the user reconnects to the network.
