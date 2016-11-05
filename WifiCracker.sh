@@ -46,9 +46,7 @@ monitorMode(){
       sleep 2
       ifconfig mon0 up
     fi
-  fi
-
-  if [ "$usuario" = "$USER" ]; then
+  elif [ "$usuario" = "$USER" ]; then
     echo " "
     echo "Para ejecutar esta opción primero debes ser superusuario"
     echo " "
