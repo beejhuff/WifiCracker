@@ -23,11 +23,14 @@ monitorMode(){
     sleep 2
     ifconfig
     echo " "
+    echo -n "Indique su tarjeta de red Wifi (wlan0, wlp2s0...): "
+    read tarjetaRed
+    echo " "
     echo "Iniciando modo monitor..."
     sleep 2
 
     if [ "$value" = "1" ]; then
-      airmon-ng start wlp2s0
+      airmon-ng start $tarjetaRed
       value=2
       echo " "
       echo "Dando de baja la interfaz mon0"
@@ -73,7 +76,7 @@ interfacesMode(){
 }
 
 monitorDown(){
-
+  
   echo " "
   echo "Dando de baja el modo monitor..."
   echo " "
