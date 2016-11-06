@@ -2,8 +2,6 @@
 
 ##Program made in bash that allows you to obtain Wifi's passwords.
 
-##¡¡IMPORTANT!! -> The whole program has been made assuming your network card is 'wlp2s0', it doesn't have to be that... your network card can be for example 'wlan0', if it's another you have to change it in the program code.
-
 ###Program works with WPA/WPA2 protocol using PSK authentication, for this option Dictionaries are needed for brute forcing
 
 ###Also you can use the program with WEP Wifi's protocol, for this option you don't need any dictionary
