@@ -298,9 +298,13 @@ macAttack(){
   sleep 13
 
   # A continuación procederemos a deautenticar a un usuario de la red (echarlo de la red), para posteriormente esperar
-  # a que se genere el Handshake.
+  # a que se genere el Handshake. Si quisiéramos hacer un Broadcast para echar a todos los usuarios de la red y
+  # esperar a que se genere el Handshake por parte de uno de los usuarios, tendríamos que especificar como dirección
+  # MAC la siguiente -> FF:FF:FF:FF:FF:FF
 
-  # Then we proceed to de-authenticate a network user, then we wait until handhsake is generated.
+  # Then we proceed to de-authenticate a network user, then we wait until handhsake is generated. If we want to make a
+  # Broadcast for de-authenticate all users from the same network and wait for the Handshake, we need to specify as
+  # MAC address -> FF:FF:FF:FF:FF:FF
 
   aireplay-ng -0 0 -e $wifiName -c $macClient --ignore-negative-one mon0
 
