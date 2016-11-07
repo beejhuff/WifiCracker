@@ -366,33 +366,26 @@ while true
     echo -n "Introduzca una opcion: "
     read opcionMenu
 
-    if [ "$opcionMenu" = "1" ]; then
-      monitorMode
-    fi
-    if [ "$opcionMenu" = "2" ]; then
-      interfacesMode
-    fi
-    if [ "$opcionMenu" = "3" ]; then
-      monitorDown
-    fi
-    if [ "$opcionMenu" = "4" ]; then
-      wifiScanner
-    fi
-    if [ "$opcionMenu" = "5" ]; then
-      macAttack
-    fi
-    if [ "$opcionMenu" = "6" ]; then
-      fakeAuth
-    fi
-    if [ "$opcionMenu" = "7" ]; then
-      wifiPassword
-    fi
-    if [ "$opcionMenu" = "8" ]; then
-      resetProgram
-    fi
-    if [ "$opcionMenu" = "0" ]; then
-      echo " "
-      exit
-    fi
+    case $opcionMenu in
 
+      1 ) monitorMode ;;
+
+      2 ) interfacesMode ;;
+
+      3 ) monitorDown ;;
+
+      4 ) wifiScanner ;;
+
+      5 ) macAttack ;;
+
+      6 ) fakeAuth ;;
+
+      7 ) wifiPassword ;;
+
+      8 ) resetProgram ;;
+
+      0 ) echo " "
+          exit
+          
+    esac
 done
