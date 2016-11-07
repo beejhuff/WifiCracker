@@ -245,7 +245,7 @@ wifiPassword(){
   echo -n "Nombre de la carpeta creada en el paso 4: "
   read folderName
   echo " "
-  echo -n "Nombre del archivo creado en el paso 4 (Con extensión correspondiente): "
+  echo -n "Nombre del archivo creado en el paso 4 (Con extensión correspondiente '.cap'): "
   read archiveName
   echo " "
   echo -n "Escribe tu nombre de usuario del sistema: "
@@ -391,6 +391,66 @@ necessaryPrograms(){
 
 }
 
+autorInfo(){
+
+  echo " "
+  echo "Programa hecho por Marcelo Raúl Vázquez Pereyra || Copyright 2016 © Marcelo Raúl Vázquez Pereyra"
+  echo " "
+  sleep 5
+
+}
+
+versionSystem(){
+
+  echo " "
+  echo "WifiCracker (v0.1.4) - Copyright 2016 © Marcelo Raúl Vázquez Pereyra"
+  echo " "
+  sleep 5
+
+}
+
+panelHelp(){
+
+  echo " "
+  echo "************************************************************************************"
+  echo "El primer paso es iniciar el modo monitor a través de la opción 1. Una vez iniciado
+el modo monitor... eres capaz de escuchar y capturar cualquier paquete que viaje por el aire.
+
+Puedes comprobar a través de la opción 2 si has iniciado correctamente la interfaz monitor.
+Posteriormente, analizarás redes WiFis disponibles en tu entorno mediante la opción 4. Te
+saldrán tanto clientes autenticados a una red como no asociados a ninguna. Cada cliente
+está situado en 'STATION' y poseen una dirección MAC. Estos verás que están conectados a
+una dirección MAC, correspondiente a la del routter (BSSID). Puedes ver de qué WiFi se trata
+viendo su 'ESSID' correspondiente.
+
+El programa te permitirá filtrar la red WiFi que deseas aislando el resto pasándole como
+parámetro el nombre de la misma. Si salen varias veces la misma red, se tratan de
+repartidores de señal. Una vez hecho esto una nueva carpeta será creada en el Escritorio
+con el nombre que desees, esta contendrá varios ficheros... entre los cuales viajará
+información encriptada, incluida la contraseña del routter. El que nos interesa es el de
+extensión '.cap'.
+
+Una vez creadas las carpetas y ficheros, procedes a de-autenticar a los usuarios de la red.
+En este caso te centrarás en un único usuario conectado a la red, para ello lo que harás
+será escoger la dirección MAC del mismo y pasársela como parámetro cuando te sea pedida.
+También se te permite la posibildad de realizar una de-autenticación global, de forma que
+echarías a todos los usuarios de la red exceptuándote a ti mismo en caso de que estés
+conectado a la misma, esto lo haces pasándole como dirección MAC -> FF:FF:FF:FF:FF:FF
+
+Una vez comience el 'ataque' y el usuario sea echado de la red, tendrás que parar el proceso
+de de-autenticación y esperar a que se reconecte. Cuando se reconecta se genera lo que se
+conoce como un 'Handshake', y es cuando capturamos la contraseña.
+
+Por tanto, una vez hecho todo este proceso, mediante la opción 7 especificamos 2 rutas,
+por un lado la del Diccionario (que deberá ser puesto en el Escritorio) y por otro la del
+fichero '.cap' que se nos generó en la opción 4. El programa comenzará a trabajar hasta
+averiguar la contraseña, la cual será mostrada en formato legible.
+********************************************************************************************"
+  echo " "
+  echo -n "Pulse cualquier tecla y Enter para volver al menú principal: "
+  read
+}
+
 while true
   do
 
@@ -407,9 +467,12 @@ while true
     echo "7. Obtener contraseña Wifi"
     echo "8. Reiniciar programa"
     echo "9. Instalar programas necesarios"
-    echo "---------------------------"
+    echo " "
+    echo "*************************************************"
+    echo "[[-h | --help ] [-a | --author] [-v | --version]]"
+    echo "*************************************************"
     echo "0. Salir "
-    echo "---------------------------"
+    echo "-------------------------------------------------"
     echo " "
     echo -n "Introduzca una opcion: "
     read opcionMenu
@@ -433,6 +496,12 @@ while true
       8 ) resetProgram ;;
 
       9 ) necessaryPrograms ;;
+
+      -h | --help ) panelHelp ;;
+
+      -a | --author ) autorInfo ;;
+
+      -v | --version ) versionSystem ;;
 
       0 ) echo " "
           exit
