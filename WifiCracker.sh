@@ -386,6 +386,10 @@ while true
 
       0 ) echo " "
           exit
-          
+          ;;
+      * ) echo " "
+          echo "Esta opción no existe, vuelva a intentarlo"
+          echo " "
+          sleep 2
     esac
 done
