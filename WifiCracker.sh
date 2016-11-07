@@ -344,6 +344,53 @@ fakeAuth(){
 
 }
 
+necessaryPrograms(){
+
+  echo " "
+  echo "Se va a instalar 'aircrack-ng' en tu ordenador, ¿quiere continuar? (Si/No)"
+  echo -n "-> "
+  read respuestaA
+
+  case $respuestaA in
+
+    Si ) echo " "
+         echo "Comenzando la instalación..."
+         echo " "
+         sleep 2
+         sudo apt-get install aircrack-ng
+         echo " "
+         ;;
+
+    No ) echo " "
+         echo "Instalación de 'aircrack-ng' cancelada..."
+         echo " "
+         sleep 3
+         ;;
+  esac
+
+  echo "Se va a instalar 'macchanger' en tu ordenador, ¿quiere continuar? (Si/No)"
+  echo -n "-> "
+  read respuestaB
+
+  case $respuestaB in
+
+    Si ) echo " "
+         echo "Comenzando la instalación..."
+         echo " "
+         sleep 2
+         sudo apt-get install macchanger
+         echo " "
+         ;;
+
+    No ) echo " "
+         echo "Instalación de 'macchanger' cancelada..."
+         echo " "
+         sleep 3
+         ;;
+  esac
+
+}
+
 while true
   do
 
@@ -359,6 +406,7 @@ while true
     echo "6. Falsa autenticación de cliente"
     echo "7. Obtener contraseña Wifi"
     echo "8. Reiniciar programa"
+    echo "9. Instalar programas necesarios"
     echo "---------------------------"
     echo "0. Salir "
     echo "---------------------------"
@@ -384,13 +432,16 @@ while true
 
       8 ) resetProgram ;;
 
+      9 ) necessaryPrograms ;;
+
       0 ) echo " "
           exit
           ;;
-          
+
       * ) echo " "
           echo "Esta opción no existe, vuelva a intentarlo"
           echo " "
           sleep 2
+          ;;
     esac
 done
