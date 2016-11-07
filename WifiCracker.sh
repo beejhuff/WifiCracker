@@ -119,6 +119,8 @@ interfacesMode(){
   echo " "
   echo "Abriendo configuración de interfaz..."
   echo " "
+  echo "'mon0' corresponderá a la nueva interfaz creada, encargada de escanear las redes WiFi disponibles..."
+  echo " "
   sleep 2
   ifconfig
   echo " "
@@ -178,10 +180,10 @@ wifiScanner(){
 
     airodump-ng mon0
     echo " "
-    echo -n "Red Wifi que quiere marcar como objetivo: "
+    echo -n "Red Wifi (ESSID) que quiere marcar como objetivo: "
     read wifiName
     echo " "
-    echo -n "Marque el canal en el que se encuentra: "
+    echo -n "Marque el canal (CH) en el que se encuentra : "
     read channelWifi
     echo " "
     echo -n "Nombre que desea ponerle a la carpeta: "
@@ -283,10 +285,10 @@ resetProgram(){
 macAttack(){
 
   echo " "
-  echo -n "Introduzca nombre del Wifi: "
+  echo -n "Introduzca nombre del Wifi (ESSID): "
   read wifiName
   echo " "
-  echo -n "Escriba la dirección MAC del usuario al que desea deautenticar: "
+  echo -n "Escriba la dirección MAC del usuario al que desea deautenticar (STATION): "
   read macClient
   echo " "
   echo "Procedemos a enviar paquetes de deautenticación a la dirección MAC especificada"
@@ -332,7 +334,7 @@ fakeAuth(){
   echo -n "Escribe una dirección MAC (Puedes usar a clientes no asociados o tu propia dirección MAC [La nueva]): "
   read fakeMAC
   echo " "
-  echo -n "Escribe el nombre del Wifi: "
+  echo -n "Escribe el nombre del Wifi (ESSID): "
   read wifiName
   echo " "
   echo "Procedemos..."
