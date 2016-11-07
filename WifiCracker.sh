@@ -404,7 +404,7 @@ autorInfo(){
 versionSystem(){
 
   echo " "
-  echo "WifiCracker (v0.1.5) - Copyright 2016 © Marcelo Raúl Vázquez Pereyra"
+  echo "WifiCracker (v0.1.2) - Copyright 2016 © Marcelo Raúl Vázquez Pereyra"
   echo " "
   sleep 5
 
