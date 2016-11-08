@@ -97,12 +97,12 @@ monitorMode(){
       echo " "
       sleep 4
     fi
-  elif [ "$usuario" = "$USER" ]; then
+  elif [ "$(id -u)" != "0" ]; then
     echo " "
-    echo "Para ejecutar esta opción primero debes ser superusuario"
+    echo "Esto debe ser ejecutado como root"
     echo " "
-    sleep 3
-  fi
+    exit 1
+fi
 }
 
 interfacesMode(){
@@ -457,7 +457,7 @@ while true
 
     clear
     echo " "
-    echo "*** Wifi Cracker ***"
+    echo "    *** Wifi Cracker ***"
     echo " "
     echo "1. Iniciar el modo monitor "
     echo "2. Mostrar interfaces"
