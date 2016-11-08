@@ -14,9 +14,7 @@
 # ¡¡You must run the program as root!! [Is not necessary to be connected at any network
 # for running the program]
 
-monitor="mon0"
-usuario=$(whoami)
-usuarioNormal="$USER"
+
 value=1
 
 monitorMode(){
@@ -25,7 +23,7 @@ monitorMode(){
 
   #You must execute this option as root, otherwise you won't be able
 
-  if [ "$usuario" = "root" ]; then
+  if [ "$(id -u)" = "0" ]; then
     echo " "
     echo "Abriendo configuración de interfaz..."
     echo " "
@@ -278,7 +276,7 @@ resetProgram(){
   echo "Dando de baja el modo monitor..."
   echo " "
   sleep 3
-  airmon-ng stop $monitor
+  airmon-ng stop mon0
   value=1
 
 }
